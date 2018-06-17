@@ -39,7 +39,7 @@ Ant build file for JiBX data binding code to schema starter example.
   
   <!-- make sure runtime jars are present -->
   <target name="check-runtime">
-  	<echo message="-------------->${env.JIBX_HOME}"></echo>
+    <echo message="-------------->${env.JIBX_HOME}"/>
     <fail unless="jibx-home">JiBX home directory not found - define JIBX_HOME system property or set path directly in build.xml file.</fail>
     <fail unless="runtime-jars-found">Required JiBX runtime jar jibx-run.jar was not found in JiBX home lib directory (${jibx-home}/lib)</fail>
   </target>
@@ -94,7 +94,7 @@ Ant build file for JiBX data binding code to schema starter example.
     </taskdef>
     <bind binding="${basedir}/binding.xml">
       <classpath refid="classpath"/>
-    </bind>  
+    </bind>
   </target>
   <!-- compile, generate default, compile binding, run test -->
   <target name="full" depends="compile,bindgen,bind"/>

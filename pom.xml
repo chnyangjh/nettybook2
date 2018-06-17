@@ -5,9 +5,23 @@
 	<artifactId>nettybook2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-
+	<repositories>
+		<repository>
+			<id>alimaven</id>
+			<name>Maven Aliyun Mirror</name>
+			<url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<grpc.version>1.6.1</grpc.version>
+		<protobuf.version>2.5.0</protobuf.version>
 	</properties>
 
 	<build>
@@ -20,6 +34,13 @@
 				</excludes>
 			</resource>
 		</resources>
+		<extensions>
+			<extension>
+				<groupId>kr.motd.maven</groupId>
+				<artifactId>os-maven-plugin</artifactId>
+				<version>1.5.0.Final</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -30,14 +51,50 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<version>0.5.0</version>
+				<configuration>
+					<protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
+					<pluginId>grpc-java</pluginId>
+					<pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>compile-custom</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty</artifactId>
+			<version>${grpc.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-protobuf</artifactId>
+			<version>${grpc.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-stub</artifactId>
+			<version>${grpc.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.2</version>
-			<scope>test</scope>
+			<!--<scope>test</scope>-->
 		</dependency>
 		<dependency>
 			<groupId>io.netty</groupId>
@@ -82,27 +139,27 @@
 		<dependency>
 			<groupId>org.jibx</groupId>
 			<artifactId>jibx-bind</artifactId>
-			<version>1.2.5</version>
+			<version>1.2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jibx</groupId>
 			<artifactId>jibx-run</artifactId>
-			<version>1.2.5</version>
+			<version>1.2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jibx</groupId>
 			<artifactId>jibx-extras</artifactId>
-			<version>1.2.5</version>
+			<version>1.2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jibx</groupId>
 			<artifactId>jibx-schema</artifactId>
-			<version>1.2.5</version>
+			<version>1.2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jibx</groupId>
 			<artifactId>jibx-tools</artifactId>
-			<version>1.2.5</version>
+			<version>1.2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -146,6 +203,11 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/org.msgpack/msgpack -->
+		<dependency>
+			<groupId>org.msgpack</groupId>
+			<artifactId>msgpack</artifactId>
+			<version>0.6.12</version>
+		</dependency>
 	</dependencies>
 </project>
